@@ -21,31 +21,103 @@ nav.scrolled{background:var(--sage-deep);box-shadow:0 2px 24px rgba(0,0,0,.18)}
 .nav-cta{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;padding:9px 22px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:.01em;text-decoration:none}
 
 /* ── HERO ── */
-.event-hero{background:#2f4a37 url('/events/seena-table-hero.jpg') right center/cover no-repeat;min-height:620px;padding:140px 0 96px;position:relative;overflow:hidden}
-.event-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,62,47,.92) 0%,rgba(40,62,47,.78) 38%,rgba(40,62,47,0) 62%)}
-.event-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--cream),transparent)}
-.hero-inner{max-width:1100px;margin:0 auto;padding:0 48px;position:relative;z-index:1}
+.event-hero{
+  --hero-height:clamp(38rem,48vw,47rem);
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:grid;
+  align-items:center;
+  min-height:var(--hero-height);
+  background:
+    radial-gradient(ellipse at 54% 8%,rgba(180,174,119,.28),transparent 48%),
+    linear-gradient(118deg,#1d3227 2%,#304b38 46%,#40563f 75%,#24392c);
+}
+.hero-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  padding:8.25rem 48px 7.25rem;
+}
+.hero-copy{max-width:min(49%,30rem)}
+.hero-scene{
+  --photo-edge:linear-gradient(90deg,transparent,rgba(0,0,0,.3) 12%,rgba(0,0,0,.88) 33%,#000 50%);
+  position:absolute;
+  inset:0 0 0 auto;
+  width:min(55%,var(--hero-height));
+  overflow:hidden;
+  -webkit-mask-image:var(--photo-edge);
+  mask-image:var(--photo-edge);
+}
+.hero-photo{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:50% 92%;
+  transform-origin:70% 72%;
+}
+.hero-scene::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(15,29,20,.70),rgba(21,35,23,.23) 14%,transparent 29%);
+}
+.event-hero::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:auto 0 -1px;
+  height:clamp(3rem,5.5vw,5rem);
+  pointer-events:none;
+  background:linear-gradient(0deg,var(--cream) 2%,rgba(247,244,239,.78) 23%,rgba(247,244,239,.22) 55%,transparent);
+}
 .back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.5);font-size:12px;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:32px;transition:color .2s}
 .back-link:hover{color:rgba(255,255,255,.8)}
 .back-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5}
 .event-tag{font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(125,170,134,.9);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .event-tag::before{content:'';width:16px;height:1px;background:rgba(125,170,134,.7)}
-h1{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;line-height:1.05;color:#fff;letter-spacing:-.02em;margin-bottom:18px}
-h1 em{font-style:italic;color:rgba(255,255,255,.8)}
-.hero-sub{font-size:17px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.7);max-width:520px;margin-bottom:20px}
-.event-meta-line{font-size:14px;font-weight:400;letter-spacing:.02em;color:rgba(255,255,255,.85);margin-bottom:32px}
-.event-meta-line span{color:rgba(255,255,255,.35);margin:0 10px}
+.event-hero h1{
+  font:300 clamp(4.25rem,7.4vw,7rem)/.98 'Cormorant Garamond',serif;
+  letter-spacing:-.045em;
+  color:#fcf8ef;
+  margin-bottom:20px;
+}
+.event-hero h1 em{font-style:italic;color:#ead7af}
+.hero-sub{font-size:1.0625rem;font-weight:300;line-height:1.65;color:#eeeee5;max-width:28rem;margin-bottom:24px}
+.event-meta-line{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 18px;
+  width:fit-content;
+  max-width:100%;
+  padding-top:14px;
+  border-top:1px solid rgba(235,218,178,.32);
+  font-size:.875rem;
+  line-height:1.55;
+  color:#ebece1;
+  margin-bottom:26px;
+}
 .meta-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,.8)}
 .meta-pill svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
 .hero-cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--sage-deep);padding:14px 30px;border-radius:40px;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s}
 .hero-cta:hover{transform:translateY(-2px)}
+@media(prefers-reduced-motion:no-preference){
+  .hero-photo{animation:hero-photo-settle 900ms cubic-bezier(.2,.72,.25,1) both}
+  .hero-copy{animation:hero-copy-in 600ms cubic-bezier(.2,.72,.25,1) both}
+}
+@keyframes hero-photo-settle{from{transform:scale(1.035)}to{transform:scale(1)}}
+@keyframes hero-copy-in{from{opacity:.86;transform:translateY(8px)}to{opacity:1;transform:none}}
 .hero-note{display:block;margin-top:14px;font-size:12px;font-weight:300;color:rgba(255,255,255,.5)}
 
-.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:300;margin-bottom:28px;color:rgba(255,255,255,.4)}
-.crumbs a{color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:300;margin-bottom:24px;color:rgba(255,255,255,.78)}
+.crumbs a{color:inherit;text-decoration:none;transition:color .2s}
 .crumbs a:hover{color:#fff}
-.crumbs .sep{color:rgba(255,255,255,.25)}
-.crumbs [aria-current]{color:rgba(255,255,255,.65)}
+.crumbs .sep{color:rgba(255,255,255,.46)}
+.crumbs [aria-current]{color:rgba(255,255,255,.92)}
 
 /* ── CONTENT ── */
 main{max-width:1100px;margin:0 auto;padding:56px 48px 96px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:64px;align-items:start}
@@ -68,6 +140,11 @@ main{max-width:1100px;margin:0 auto;padding:56px 48px 96px;display:grid;grid-tem
 .food-card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:12px}
 .food-card p{font-size:15px}
 .food-card p:last-child{margin-bottom:0}
+.farm-story{background:var(--sage-pale);scroll-margin-top:84px}
+.farm-story .farm-closing{
+  color:var(--sage-deep);
+  font:italic 400 1.5rem/1.3 'Cormorant Garamond',serif;
+}
 .card-photos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:20px}
 .card-photos button{position:relative;aspect-ratio:1;border:none;padding:0;border-radius:8px;overflow:hidden;cursor:zoom-in;background:var(--cream-dark)}
 .card-photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
@@ -176,15 +253,33 @@ footer{background:var(--sage-deep);padding:40px 48px 28px}
   .nav-links,.nav-cta{display:none!important}
   .nav-hamburger{display:flex}
   nav{padding:0 20px}
-  .event-hero{padding:100px 0 60px;min-height:0;background-position:72% center}
-  .hero-inner{padding:0 20px}
-  .event-hero::before{background:linear-gradient(180deg,rgba(40,62,47,.82) 0%,rgba(40,62,47,.72) 100%)}
-  h1{font-size:44px}
+  .hero-inner{padding:7rem 24px 6rem}
   .hero-sub{font-size:15.5px}
   main{padding:40px 20px 64px}
   .booking-card{padding:24px 20px}
   .food-card,.speaker-card{padding:22px 20px}
   .event-content h2{font-size:30px}
+}
+@media(max-width:680px){
+  .event-hero{display:block;min-height:0}
+  .hero-inner{padding:82px 22px 0}
+  .hero-copy{max-width:29rem}
+  .hero-scene{
+    --photo-edge:linear-gradient(180deg,transparent,rgba(0,0,0,.55) 13%,#000 24%);
+    position:relative;
+    inset:auto;
+    width:100%;
+    aspect-ratio:4 / 5;
+    max-height:44rem;
+    margin-top:-28px;
+  }
+  .hero-photo{object-position:50% 94%}
+  .hero-scene::after{display:none}
+  .event-hero::after{height:2.75rem}
+  .crumbs{margin-bottom:14px}
+  .event-hero h1{font-size:clamp(3.7rem,16vw,5rem);margin-bottom:12px}
+  .hero-sub{line-height:1.6;margin-bottom:14px}
+  .event-meta-line{padding-top:11px;margin-bottom:18px}
 }
 @media(max-width:640px){footer{padding:32px 20px 24px}.footer-links{gap:16px}.footer-contact-line{line-height:1.9}}
 </style>
@@ -211,11 +306,21 @@ footer{background:var(--sage-deep);padding:40px 48px 28px}
 
 <section class="event-hero">
   <div class="hero-inner">
-    <div class="crumbs" role="navigation" aria-label="Breadcrumb"><a href="/">Seena</a><span class="sep">›</span><a href="/learn/">Academy</a><span class="sep">›</span><a href="/learn/events/">Events</a><span class="sep">›</span><span aria-current="page">Seena Table</span></div>
-    <h1>Seena <em>Table</em></h1>
-    <p class="hero-sub">A hands-on culinary experience for your taste buds, your gut, and the food memories that connect us.</p>
-    <div class="event-meta-line">28 November 2026<span>·</span>13:00–15:00<span>·</span>Charneca de Caparica<span>·</span>35€</div>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH4x-iuSEtOGNV5rRqI8Ki08SZPVcAT0kBdljI1Ejhny7Mww/viewform" target="_blank" rel="noopener" class="hero-cta">Reserve your seat</a>
+    <div class="hero-copy">
+      <div class="crumbs" role="navigation" aria-label="Breadcrumb"><a href="/">Seena</a><span class="sep">›</span><a href="/learn/">Academy</a><span class="sep">›</span><a href="/learn/events/">Events</a><span class="sep">›</span><span aria-current="page">Seena Table</span></div>
+      <h1>Seena <em>Table</em></h1>
+      <p class="hero-sub">A hands-on culinary experience for your taste buds, your gut, and the food memories that connect us.</p>
+      <div class="event-meta-line">
+        <span>28 November 2026 · 13:00–15:00</span>
+        <span>Charneca de Caparica · 35€</span>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH4x-iuSEtOGNV5rRqI8Ki08SZPVcAT0kBdljI1Ejhny7Mww/viewform" target="_blank" rel="noopener" class="hero-cta">Reserve your seat</a>
+    </div>
+  </div>
+  <div class="hero-scene">
+    <img class="hero-photo" src="/events/gallery/seena-table-09.jpg"
+         width="1067" height="1600" fetchpriority="high"
+         alt="Participants packing seasonal vegetables into glass jars at Seena Table">
   </div>
 </section>
 
@@ -268,6 +373,12 @@ footer{background:var(--sage-deep);padding:40px 48px 28px}
           <button type="button" class="extra" data-i="18" aria-label="Open photo"><img src="/events/gallery/seena-table-19-sm.jpg" data-full="/events/gallery/seena-table-19.jpg" alt="Guests preparing fermented vegetables at Seena Table" loading="lazy"></button>
         </div>
       </div>
+      <section class="food-card farm-story" id="food-farmers-our-land" aria-labelledby="farm-story-heading">
+        <h3 id="farm-story-heading">Food, Farmers &amp; Our Land</h3>
+        <p>At every Seena Table gathering, we partner with a different local farm, bringing their seasonal vegetables to our table to ferment together. We introduce the farmers, their stories, and the land behind our food, helping consumers build a direct connection with the people who grow it.</p>
+        <p>This way, we support local farmers and the economy, celebrate seasonal eating, enjoy fresher local produce, reduce food miles, and embrace the diversity of plants that nourishes our gut microbiome.</p>
+        <p class="farm-closing">Because knowing where our food comes from changes the way we connect with it.</p>
+      </section>
       <div class="food-card">
         <h3>Food for the Soul</h3>
         <p>Food carries memories, cultures, and family traditions.</p>
